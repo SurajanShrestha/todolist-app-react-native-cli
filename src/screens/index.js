@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {
     FAB,
+    List,
 } from 'react-native-paper';
 import HeaderBar from '../components/Header';
 import CustomModal from '../components/Modal';
@@ -28,14 +29,30 @@ function Home() {
         setTodo(todo => [...todo, task]);
     }
 
+    const removeTodo = (index) => {
+        setTodo(todo => {
+            let updatedTodo = todo.filter((item, i) => {
+                return i !== index;
+            });
+            setTodo(updatedTodo);
+        })
+    }
+
     return (
         <View style={{ height: '100%' }}>
             <HeaderBar title='Create Your Todo' />
             <View style={styles.mainBody}>
-                <Text>Create Your Todo!!!</Text>
+                {todo?.map((item, index) => (
+                    <List.Item
+                        title={item}
+                        description=""
+                        left={props => <List.Icon {...props} icon="text-box-outline" />}
+                        // right={props => <List.Icon {...props} icon="check-all" color='forestgreen' /* style={styles.listDoneBtn} */ />}
+                        onPress={() => removeTodo(index)}
+                        key={index}
+                    />
+                ))}
             </View>
-            {console.log(text)}
-            {console.log(todo)}
             <CustomModal visible={visible} hideModal={hideModal} text={text} changeText={changeText} addTodo={addTodo} />
             <FAB
                 style={styles.fab}
@@ -56,6 +73,12 @@ const styles = StyleSheet.create({
     mainBody: {
         paddingHorizontal: 20,
     },
+    listDoneBtn: {
+        borderWidth: 1,
+        borderColor: 'forestgreen',
+        borderRadius: 100,
+        padding: 0,
+    }
 })
 
 export default Home;

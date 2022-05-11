@@ -17,18 +17,18 @@ function CustomModal({
     changeText,
     addTodo,
 }) {
-    // const [text, setText] = React.useState("");
 
-    // const changeText = (text) => {
-    //     setText(text);
-    // };
+    const handleAdd = (text) => {
+        addTodo(text);
+        changeText("");
+    };
 
     return (
         <Portal>
             <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
                 <CustomInput text={text} changeText={changeText} mode="outlined" />
                 <View style={styles.btnContainer}>
-                    <CustomButton title="Add" onPress={() => addTodo(text)} icon="plus" />
+                    <CustomButton title="Add" onPress={() => handleAdd(text)} icon="plus" />
                 </View>
             </Modal>
         </Portal>
